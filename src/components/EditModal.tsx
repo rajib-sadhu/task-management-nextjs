@@ -5,8 +5,8 @@ import Swal from "sweetalert2";
 
 const EditModal = (props: { updateData: any, handleEditModalClose: any, refetch: any }) => {
 
-    console.log('update data', props.updateData)
-    
+
+
     const handleUpdateTask = (e: any) => {
         e.preventDefault()
 
@@ -15,9 +15,9 @@ const EditModal = (props: { updateData: any, handleEditModalClose: any, refetch:
         const desc = form.desc.value;
         const status = form.status.value;
 
-        const updatetask = { title, desc, status }
+        // const updatetask = { title, desc, status }
 
-        axios.put('http://localhost:5000/tasks', updatetask)
+        axios.put(`http://localhost:5000/tasks/${props.updateData._id}`, { title: title, desc: desc, status: status })
             .then(res => {
                 console.log(res.data);
                 if (res.data.modifiedCount) {
@@ -56,11 +56,11 @@ const EditModal = (props: { updateData: any, handleEditModalClose: any, refetch:
                         <input defaultValue={props.updateData.desc} type="text" name='desc' placeholder='Enter Description' required />
                         <div className="" >
                             <label htmlFor="" className="text-slate-600">Status</label>
-                            <div className="flex items-center gap-2 ms-3">
-                                Todo <input type="radio" name="status" value="todo"  />
-                                Progress <input type="radio" name="status" value="progress" />
-                                Complete <input type="radio" name="status" value="complete" />
-                            </div>
+                            <select name="status" id="" className="mt-2 ms-2 bg-slate-200 px-2 py-1" value={props.updateData.status}>
+                                <option value="Todo" className="px-2 py-1" >Todo</option>
+                                <option value="Progress" className="px-2 py-1" >Progress</option>
+                                <option value="Completed" className="px-2 py-1" >Completed</option>
+                            </select>
                         </div>
                         <button type='submit' className='bg-[#9ea1ff] px-3 py-1 font-semibold text-white hover:bg-[#6b70ff] mx-auto' >Add</button>
                     </form>

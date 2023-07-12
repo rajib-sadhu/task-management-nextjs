@@ -1,5 +1,5 @@
 "use client"
-
+import toast from 'react-hot-toast';
 import Image from 'next/image'
 
 import { useQuery } from 'react-query';
@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 import EditModal from '@/components/EditModal';
 
 export default function Home() {
+
 
   const [showAddNewModal, setShowAddNewModal] = useState(false);
   const handleAddNewModalClose = () => setShowAddNewModal(false);
@@ -71,9 +72,10 @@ export default function Home() {
           })
       }
     })
-
-
   }
+
+
+
 
   return (
     <div className='relative overflow-hidden'>
@@ -98,9 +100,25 @@ export default function Home() {
                 {
                   users.map((v: any) => <div key={v._id} className='shadow-xl bg-slate-50 rounded-xl flex justify-between overflow-hidden'>
                     <div className='p-4 text-sm space-y-2'>
-                      <h1><span className='font-semibold'>Title:</span> {v.title} </h1>
-                      <h1><span className='font-semibold'>Description:</span> {v.desc}</h1>
-                      <h1><span className='font-semibold'>Status:</span> <span className='capitalize'>{v.status}</span></h1>
+                      <h1><span className='font-semibold'>Title:</span> {v.title.length > 20 ? v.title.slice(0, 20)+'...' : v.title} </h1>
+                      <h1><span className='font-semibold'>Description:</span> {v.desc.length > 20 ? v.desc.slice(0, 20)+'...' : v.desc}</h1>
+                      <h1><span className='font-semibold'>Status:</span>
+                        <select name="status" id="" value={v.status} className='ms-1 px-3 bg-slate-100'
+                          onChange={(event) => {
+                            const select = event.target.value;
+                            axios.patch(`http://localhost:5000/task/${v._id}`, { status: select })
+                              .then(res => {
+                                console.log(res.data);
+                                if (res.data.modifiedCount) {
+                                  refetch();
+                                  toast.success(`Status changed to ${select}`)
+                                }
+                              })
+                          }} >
+                          <option value="Todo" className="px-2 py-1" >Todo</option>
+                          <option value="Progress" className="px-2 py-1" >Progress</option>
+                          <option value="Completed" className="px-2 py-1" >Completed</option>
+                        </select></h1>
                     </div>
                     <div className='flex flex-col justify-between' >
                       <button title='Delete user' onClick={() => handleDelete(v._id)} className='bg-red-500 p-2 text-red-200 flex-1 hover:opacity-75' ><AiFillDelete /></button>

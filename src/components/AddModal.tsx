@@ -20,6 +20,7 @@ const AddModal = (props: { handleAddNewModalClose: any, refetch: any }) => {
 
 
         const addTask = { title, desc, status };
+        console.log(addTask)
 
         axios.post('http://localhost:5000/tasks', addTask)
             .then(res => {

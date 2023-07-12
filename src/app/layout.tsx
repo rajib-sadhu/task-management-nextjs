@@ -3,6 +3,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Toaster } from 'react-hot-toast'
 
 import { QueryClient, QueryClientProvider } from 'react-query'
 
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <QueryClientProvider client={queryClient} >
         <body className={inter.className}>{children}</body>
+        <Toaster />
       </QueryClientProvider>
     </html>
   )
