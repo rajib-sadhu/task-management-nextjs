@@ -22,7 +22,7 @@ const AddModal = (props: { handleAddNewModalClose: any, refetch: any }) => {
         const addTask = { title, desc, status };
         console.log(addTask)
 
-        axios.post('http://localhost:5000/tasks', addTask)
+        axios.post('https://rs-task-management-server.vercel.app/tasks', addTask)
             .then(res => {
                 console.log(res.data);
                 if (res.data.insertedId) {

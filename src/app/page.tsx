@@ -28,7 +28,7 @@ export default function Home() {
 
   const dataUpdate = (id: string) => {
     setShowEditModal(true)
-    axios('http://localhost:5000/tasks')
+    axios('https://rs-task-management-server.vercel.app/tasks')
       .then(res => {
         const allUsers = res.data;
         const filterUser = allUsers.filter((user: any) => user._id === id);
@@ -39,7 +39,7 @@ export default function Home() {
   const { data: users = [], isLoading, refetch } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
-      const res = await axios('http://localhost:5000/tasks')
+      const res = await axios('https://rs-task-management-server.vercel.app/tasks')
       return res.data;
     }
   })
@@ -58,7 +58,7 @@ export default function Home() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/tasks/${id}`)
+        axios.delete(`https://rs-task-management-server.vercel.app/tasks/${id}`)
           .then(res => {
             console.log(res.data);
             if (res.data.deletedCount) {
@@ -106,7 +106,7 @@ export default function Home() {
                         <select name="status" id="" value={v.status} className='ms-1 px-3 bg-slate-100'
                           onChange={(event) => {
                             const select = event.target.value;
-                            axios.patch(`http://localhost:5000/task/${v._id}`, { status: select })
+                            axios.patch(`https://rs-task-management-server.vercel.app/task/${v._id}`, { status: select })
                               .then(res => {
                                 console.log(res.data);
                                 if (res.data.modifiedCount) {
