@@ -15,9 +15,9 @@ const EditModal = (props: { updateData: any, handleEditModalClose: any, refetch:
         const desc = form.desc.value;
         const status = form.status.value;
 
-        // const updatetask = { title, desc, status }
+        // const update task = { title, desc, status }
 
-        axios.put(`https://rs-task-management-server.vercel.app/tasks/${props.updateData._id}`, { title: title, desc: desc, status: status })
+        axios.put(`https://rs-task-management-server.vercel.app/task/${props.updateData._id}`, { title: title, desc: desc, status: status })
             .then(res => {
                 console.log(res.data);
                 if (res.data.modifiedCount) {

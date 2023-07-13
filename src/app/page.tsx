@@ -26,6 +26,7 @@ export default function Home() {
     setUpdateData({})
   };
 
+  // Update task data function
   const dataUpdate = (id: string) => {
     setShowEditModal(true)
     axios('https://rs-task-management-server.vercel.app/tasks')
@@ -36,6 +37,7 @@ export default function Home() {
       })
   }
 
+  // Show / fetch task data
   const { data: users = [], isLoading, refetch } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
@@ -45,7 +47,7 @@ export default function Home() {
   })
 
 
-
+  // Delete task
   const handleDelete = (id: any) => {
 
     Swal.fire({
@@ -75,8 +77,6 @@ export default function Home() {
   }
 
 
-
-
   return (
     <div className='relative overflow-hidden'>
       <div className='main-body min-h-screen w-full absolute -z-10'></div>
@@ -100,8 +100,8 @@ export default function Home() {
                 {
                   users.map((v: any) => <div key={v._id} className='shadow-xl bg-slate-50 rounded-xl flex justify-between overflow-hidden'>
                     <div className='p-4 text-sm space-y-2'>
-                      <h1><span className='font-semibold'>Title:</span> {v.title.length > 20 ? v.title.slice(0, 20)+'...' : v.title} </h1>
-                      <h1><span className='font-semibold'>Description:</span> {v.desc.length > 20 ? v.desc.slice(0, 20)+'...' : v.desc}</h1>
+                      <h1><span className='font-semibold'>Title:</span> {v.title.length > 20 ? v.title.slice(0, 20) + '...' : v.title} </h1>
+                      <h1><span className='font-semibold'>Description:</span> {v.desc.length > 20 ? v.desc.slice(0, 20) + '...' : v.desc}</h1>
                       <h1><span className='font-semibold'>Status:</span>
                         <select name="status" id="" value={v.status} className='ms-1 px-3 bg-slate-100'
                           onChange={(event) => {
@@ -128,7 +128,6 @@ export default function Home() {
                 }
               </div>
           }
-
         </div>
       </div>
     </div>
